@@ -14,4 +14,6 @@ public class Mood
     public string? Description { get; set; }
     
     public bool Deleted { get; set; } = false;
+    
+    public List<UserMood> UserMoods { get; set; }
 }

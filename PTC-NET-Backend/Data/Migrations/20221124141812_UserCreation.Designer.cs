@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PTC_NET_Backend.Data;
 
@@ -10,9 +11,10 @@ using PTC_NET_Backend.Data;
 namespace PTC_NET_Backend.Migrations
 {
     [DbContext(typeof(PtcDbContext))]
-    partial class PTCDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221124141812_UserCreation")]
+    partial class UserCreation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,34 +104,6 @@ namespace PTC_NET_Backend.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("PTC_NET_Backend.Models.UserMood", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("DriverId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MoodId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DriverId");
-
-                    b.HasIndex("MoodId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserMoods");
-                });
-
             modelBuilder.Entity("PTC_NET_Backend.Models.WebInfo", b =>
                 {
                     b.Property<string>("CompanyId")
@@ -143,43 +117,6 @@ namespace PTC_NET_Backend.Migrations
                     b.HasKey("CompanyId");
 
                     b.ToTable("WebInfo");
-                });
-
-            modelBuilder.Entity("PTC_NET_Backend.Models.UserMood", b =>
-                {
-                    b.HasOne("PTC_NET_Backend.Models.User", "Driver")
-                        .WithMany("UserMoods")
-                        .HasForeignKey("DriverId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PTC_NET_Backend.Models.Mood", "Mood")
-                        .WithMany("UserMoods")
-                        .HasForeignKey("MoodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PTC_NET_Backend.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Driver");
-
-                    b.Navigation("Mood");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("PTC_NET_Backend.Models.Mood", b =>
-                {
-                    b.Navigation("UserMoods");
-                });
-
-            modelBuilder.Entity("PTC_NET_Backend.Models.User", b =>
-                {
-                    b.Navigation("UserMoods");
                 });
 #pragma warning restore 612, 618
         }
